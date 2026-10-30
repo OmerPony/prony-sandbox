@@ -1,0 +1,13 @@
+name: prony-relay
+
+# Does no work. Review events on fork PRs run with a read-only token, so this
+# workflow only exists to trigger prony.yml (via workflow_run) with a write token.
+on:
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo relay

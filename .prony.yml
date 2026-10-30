@@ -1,0 +1,11 @@
+version: 1
+rules:
+  - name: docs
+    paths: ["docs/**", "**/*.md"]
+    tier: 0
+trusted:
+  users: [OmerPony]
+codeowners: "off"
+classifier:
+  enabled: false
+author_self_approval: true

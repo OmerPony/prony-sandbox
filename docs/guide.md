@@ -1,0 +1,3 @@
+# Guide
+
+Call `greet("world")`.
