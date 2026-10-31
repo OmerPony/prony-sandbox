@@ -24,11 +24,10 @@ jobs:
     steps:
       # SANDBOX ONLY: prony lives in a private repo, so check out prony's OWN code
       # (never the PR's code) with a read-only deploy key, then run it as a local action.
-      # TEST: pinned to the v2/simulate branch until it is merged.
       - uses: actions/checkout@v4
         with:
           repository: OmerPony/prony-action
-          ref: v2/simulate
+          ref: main
           ssh-key: ${{ secrets.PRONY_ACTION_DEPLOY_KEY }}
           path: .prony-action
           persist-credentials: false
