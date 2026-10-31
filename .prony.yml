@@ -11,7 +11,7 @@ classifier:
 author_self_approval: true
 # SANDBOX TEST SETTINGS: tiny sample so the breaker can trip on a couple of PRs.
 breaker:
-  mode: warn
+  mode: enforce
   window: 5
   min_sample: 1
   maturity_days: 0
