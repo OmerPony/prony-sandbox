@@ -1,0 +1,37 @@
+name: prony-simulate
+
+# Advisory only: when a pull request changes .prony.yml, replay recent merged PRs under the
+# current and the proposed config and post one comment (updated in place on each push).
+# It never touches the prony/approval check, so a slow or failing run cannot block a merge.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths: [".prony.yml"]
+
+permissions:
+  contents: read
+  pull-requests: write # the simulation comment
+  checks: read # prony/approval decision records
+
+concurrency:
+  group: prony-simulate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # SANDBOX ONLY: prony lives in a private repo, so check out prony's OWN code
+      # (never the PR's code) with a read-only deploy key, then run it as a local action.
+      # TEST: pinned to the v2/simulate branch until it is merged.
+      - uses: actions/checkout@v4
+        with:
+          repository: OmerPony/prony-action
+          ref: v2/simulate
+          ssh-key: ${{ secrets.PRONY_ACTION_DEPLOY_KEY }}
+          path: .prony-action
+          persist-credentials: false
+      - uses: ./.prony-action
+        with:
+          command: simulate-action
