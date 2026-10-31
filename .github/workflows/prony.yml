@@ -33,3 +33,8 @@ jobs:
           path: .prony-action
           persist-credentials: false
       - uses: ./.prony-action
+        with:
+          # GITHUB_TOKEN cannot read repository variables via the API, so pass the
+          # breaker state in from the vars context.
+          breaker-state: ${{ vars.PRONY_BREAKER }}
+          breaker-from-vars: "1"

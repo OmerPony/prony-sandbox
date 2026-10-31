@@ -1,0 +1,39 @@
+name: prony-report
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+  checks: read
+
+concurrency:
+  group: prony-weekly
+  cancel-in-progress: false
+
+jobs:
+  weekly:
+    if: github.event_name != 'issue_comment' || (!github.event.issue.pull_request && startsWith(github.event.comment.body, '/prony breaker reset') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    steps:
+      # SANDBOX ONLY: check out prony's OWN code (never this repo's code) with the
+      # read-only deploy key, then run it as a local action.
+      - uses: actions/checkout@v4
+        with:
+          repository: OmerPony/prony-action
+          ref: main
+          ssh-key: ${{ secrets.PRONY_ACTION_DEPLOY_KEY }}
+          path: .prony-action
+          persist-credentials: false
+      - uses: ./.prony-action
+        with:
+          command: weekly
+          breaker-token: ${{ secrets.PRONY_BREAKER_TOKEN }}
+          breaker-state: ${{ vars.PRONY_BREAKER }}
+          breaker-from-vars: "1"
