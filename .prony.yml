@@ -2,7 +2,7 @@ version: 1
 rules:
   - name: docs
     paths: ["docs/**", "**/*.md"]
-    tier: 0
+    tier: 1
 trusted:
   users: [OmerPony]
 codeowners: "off"
