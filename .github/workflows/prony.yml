@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: OmerPony/prony-action
-          ref: main
+          ref: v2/structural-rules # TEMP: structural-rules live test
           ssh-key: ${{ secrets.PRONY_ACTION_DEPLOY_KEY }}
           path: .prony-action
           persist-credentials: false
@@ -38,3 +38,4 @@ jobs:
           # breaker state in from the vars context.
           breaker-state: ${{ vars.PRONY_BREAKER }}
           breaker-from-vars: "1"
+          structure-state: ${{ vars.PRONY_STRUCTURE }}
