@@ -9,15 +9,6 @@ codeowners: "off"
 classifier:
   enabled: false
 author_self_approval: true
-# SANDBOX TEST: structural checks (fan-in threshold tiny for the test)
-structure:
-  sensitive_imports:
-    enabled: true
-    tier: 2
-  fan_in:
-    enabled: true
-    tier: 2
-    min_importers: 2
 # SANDBOX TEST SETTINGS: tiny sample so the breaker can trip on a couple of PRs.
 breaker:
   mode: warn

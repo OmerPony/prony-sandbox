@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: OmerPony/prony-action
-          ref: v2/structural-rules # TEMP: structural-rules live test
+          ref: main
           ssh-key: ${{ secrets.PRONY_ACTION_DEPLOY_KEY }}
           path: .prony-action
           persist-credentials: false
